@@ -29,7 +29,7 @@ importers:
 
   packages/storybook:
     dependencies:
-      '@acme/web-components':
+      '@mamadshni/web-components':
         specifier: workspace:^
         version: link:../web-components
     devDependencies:
