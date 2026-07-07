@@ -4,7 +4,7 @@ name: Release
 #   pnpm version patch     (bumps root, auto-commits, auto-tags vX.Y.Z)
 #   git push && git push --tags
 # The tag push triggers this workflow, which stamps the tag's version onto
-# @acme/web-components and publishes it to GitHub Packages.
+# @mamadshni/web-components and publishes it to GitHub Packages.
 # The storybook package is private and is never published.
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: pnpm
           registry-url: https://npm.pkg.github.com
-          scope: '@acme'
+          scope: '@mamadshni'
 
       - name: Resolve version and dist-tag from tag
         id: meta
@@ -49,14 +49,14 @@ jobs:
 
       - name: Stamp version from tag onto the package
         run: |
-          pnpm --filter @acme/web-components exec npm version \
+          pnpm --filter @mamadshni/web-components exec npm version \
             "${{ steps.meta.outputs.version }}" \
             --no-git-tag-version --allow-same-version
 
-      - name: Build & publish @acme/web-components to GitHub Packages
+      - name: Build & publish @mamadshni/web-components to GitHub Packages
         run: |
-          pnpm --filter @acme/web-components build
-          pnpm --filter @acme/web-components publish \
+          pnpm --filter @mamadshni/web-components build
+          pnpm --filter @mamadshni/web-components publish \
             --tag "${{ steps.meta.outputs.dist_tag }}" \
             --no-git-checks
         env:

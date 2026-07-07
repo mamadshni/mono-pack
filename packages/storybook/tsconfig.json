@@ -6,7 +6,7 @@
     "noEmit": true,
     "types": ["vite/client"],
     "paths": {
-      "@acme/web-components": ["../web-components/src/index.ts"]
+      "@mamadshni/web-components": ["../web-components/src/index.ts"]
     }
   },
   "include": ["stories", ".storybook/**/*"]

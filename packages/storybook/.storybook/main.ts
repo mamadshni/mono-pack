@@ -12,13 +12,13 @@ const config: StorybookConfig = {
     // Alias the component package to its TypeScript source so editing a
     // component hot-reloads Storybook without rebuilding the package first.
     const componentSrc = join(
-      dirname(require.resolve('@acme/web-components/package.json')),
+      dirname(require.resolve('@mamadshni/web-components/package.json')),
       'src/index.ts',
     );
     viteConfig.resolve ??= {};
     viteConfig.resolve.alias = {
       ...viteConfig.resolve.alias,
-      '@acme/web-components': componentSrc,
+      '@mamadshni/web-components': componentSrc,
     };
     return viteConfig;
   },

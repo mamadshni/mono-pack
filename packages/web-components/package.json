@@ -1,6 +1,6 @@
 {
   "name": "@mamadshni/web-components",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Framework-agnostic, dependency-free vanilla Web Components.",
   "license": "MIT",
   "type": "module",
@@ -40,7 +40,7 @@
     "clean": "rm -rf dist"
   },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "web-components",

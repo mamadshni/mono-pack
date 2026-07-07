@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/web-components-vite';
 
 // Registers all custom elements once for every story.
-import '@acme/web-components';
+import '@mamadshni/web-components';
 
 const preview: Preview = {
   parameters: {

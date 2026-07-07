@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import type { ButtonSize, ButtonVariant } from '@acme/web-components';
+import type { ButtonSize, ButtonVariant } from '@mamadshni/web-components';
 
 interface ButtonArgs {
   label: string;
