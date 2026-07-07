@@ -1,0 +1,31 @@
+{
+  "name": "acme-monorepo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter './packages/*' build",
+    "dev": "pnpm --filter @acme/storybook dev",
+    "storybook": "pnpm --filter @acme/storybook dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r --filter './packages/*' typecheck",
+    "version:wc": "pnpm --filter @acme/web-components exec npm version --no-git-tag-version",
+    "version:sb": "pnpm --filter @acme/storybook exec npm version --no-git-tag-version",
+    "release:wc": "pnpm --filter @acme/web-components build && pnpm --filter @acme/web-components publish --access public",
+    "release:sb": "pnpm --filter @acme/storybook build && pnpm --filter @acme/storybook publish --access public"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.0",
+    "prettier": "^3.5.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.34.0"
+  }
+}

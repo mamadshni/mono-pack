@@ -1,0 +1,54 @@
+{
+  "name": "@acme/web-components",
+  "version": "0.0.0",
+  "description": "Framework-agnostic, dependency-free vanilla Web Components.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/components/button/wc-button.d.ts",
+      "default": "./dist/components/button/wc-button.js"
+    },
+    "./switch": {
+      "types": "./dist/components/switch/wc-switch.d.ts",
+      "default": "./dist/components/switch/wc-switch.js"
+    },
+    "./badge": {
+      "types": "./dist/components/badge/wc-badge.d.ts",
+      "default": "./dist/components/badge/wc-badge.js"
+    },
+    "./bundle": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/bundle/index.min.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build.mjs && tsc -p tsconfig.build.json",
+    "dev": "node build.mjs --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "web-components",
+    "custom-elements",
+    "vanilla",
+    "typescript"
+  ],
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
