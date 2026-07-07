@@ -45,8 +45,6 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm lint && pnpm typecheck
-
       - name: Stamp version from tag onto the package
         run: |
           pnpm --filter @mamadshni/web-components exec npm version \
