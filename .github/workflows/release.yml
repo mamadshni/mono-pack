@@ -1,17 +1,19 @@
 name: Release
 
-# Per-package tags keep releases independent:
-#   wc-v1.2.0  -> publishes @acme/web-components 1.2.0
-#   sb-v0.4.0  -> publishes @acme/storybook 0.4.0
+# Your entire release flow:
+#   pnpm version patch     (bumps root, auto-commits, auto-tags vX.Y.Z)
+#   git push && git push --tags
+# The tag push triggers this workflow, which stamps the tag's version onto
+# @acme/web-components and publishes it to GitHub Packages.
+# The storybook package is private and is never published.
 on:
   push:
     tags:
-      - 'wc-v*'
-      - 'sb-v*'
+      - 'v*'
 
 permissions:
-  contents: write # create the GitHub Release
-  packages: write # publish to GitHub Packages
+  contents: read
+  packages: write
 
 jobs:
   publish:
@@ -28,56 +30,34 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@acme'
 
-      - name: Resolve package from tag
+      - name: Resolve version and dist-tag from tag
         id: meta
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          case "$TAG" in
-            wc-v*) NAME="@acme/web-components"; DIR="packages/web-components" ;;
-            sb-v*) NAME="@acme/storybook";      DIR="packages/storybook" ;;
-            *) echo "Unknown tag prefix: $TAG" >&2; exit 1 ;;
-          esac
-          VERSION="${TAG#*-v}"
-          # prerelease versions (1.2.0-beta.0) go to a matching dist-tag, not "latest"
+          VERSION="${GITHUB_REF_NAME#v}"
           case "$VERSION" in
             *-*) DIST_TAG="${VERSION#*-}"; DIST_TAG="${DIST_TAG%%.*}" ;;
             *)   DIST_TAG="latest" ;;
           esac
           {
-            echo "name=$NAME"
-            echo "dir=$DIR"
             echo "version=$VERSION"
             echo "dist_tag=$DIST_TAG"
           } >> "$GITHUB_OUTPUT"
-
-      - name: Verify tag matches package.json version
-        run: |
-          PKG_VERSION="$(node -p "require('./${{ steps.meta.outputs.dir }}/package.json').version")"
-          if [ "$PKG_VERSION" != "${{ steps.meta.outputs.version }}" ]; then
-            echo "Tag says ${{ steps.meta.outputs.version }} but ${{ steps.meta.outputs.dir }}/package.json says $PKG_VERSION" >&2
-            echo "Bump the version (pnpm version:wc / version:sb), commit, then tag that commit." >&2
-            exit 1
-          fi
 
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm lint && pnpm typecheck
 
-      - name: Build & publish to GitHub Packages
+      - name: Stamp version from tag onto the package
         run: |
-          pnpm --filter "${{ steps.meta.outputs.name }}" build
-          pnpm --filter "${{ steps.meta.outputs.name }}" publish \
+          pnpm --filter @acme/web-components exec npm version \
+            "${{ steps.meta.outputs.version }}" \
+            --no-git-tag-version --allow-same-version
+
+      - name: Build & publish @acme/web-components to GitHub Packages
+        run: |
+          pnpm --filter @acme/web-components build
+          pnpm --filter @acme/web-components publish \
             --tag "${{ steps.meta.outputs.dist_tag }}" \
             --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create GitHub Release
-        run: |
-          PRERELEASE_FLAG=""
-          [ "${{ steps.meta.outputs.dist_tag }}" != "latest" ] && PRERELEASE_FLAG="--prerelease"
-          gh release create "$GITHUB_REF_NAME" \
-            --title "${{ steps.meta.outputs.name }}@${{ steps.meta.outputs.version }}" \
-            --generate-notes $PRERELEASE_FLAG
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,6 @@
 {
   "name": "acme-monorepo",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.12.1",
@@ -14,11 +15,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "pnpm -r --filter './packages/*' typecheck",
-    "version:wc": "pnpm --filter @mamadshni/web-components exec npm version --no-git-tag-version",
-    "version:sb": "pnpm --filter @mamadshni/storybook exec npm version --no-git-tag-version",
-    "release:wc": "pnpm --filter @mamadshni/web-components build && pnpm --filter @acme/web-components publish --access public",
-    "release:sb": "pnpm --filter @mamadshni/storybook build && pnpm --filter @acme/storybook publish --access public"
+    "typecheck": "pnpm -r --filter './packages/*' typecheck"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -27,6 +24,5 @@
     "prettier": "^3.5.0",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.34.0"
-  },
-  "version": "0.0.1"
+  }
 }
