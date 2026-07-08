@@ -14,7 +14,7 @@
     "clean": "rm -rf storybook-static"
   },
   "dependencies": {
-    "@acme/web-components": "workspace:^"
+    "@mamadshni/web-components": "workspace:^"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.1.7",
