@@ -1,6 +1,6 @@
 {
   "name": "@mamadshni/storybook",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "description": "Storybook showcase for @mamadshni/web-components.",
   "license": "MIT",
   "private": true,
