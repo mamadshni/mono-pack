@@ -1,4 +1,4 @@
-# Acme Web Components Monorepo
+# Web Components Monorepo
 
 A pnpm workspace containing:
 
