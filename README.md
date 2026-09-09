@@ -64,9 +64,3 @@ pnpm release:wc
 > **Always publish with `pnpm publish`** (which the `release:*` scripts do),
 > never raw `npm publish`: pnpm rewrites the internal `workspace:^` dependency
 > ranges to real semver versions in the published tarball.
-
-There is also a manual **Release** GitHub Actions workflow
-(`.github/workflows/release.yml`): pick the package and dist-tag and it
-lints, typechecks, builds, and publishes. Set the `NPM_TOKEN` repository
-secret first, and rename the `@acme` scope to your own npm scope before the
-first release.
