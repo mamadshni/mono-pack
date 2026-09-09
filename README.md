@@ -13,8 +13,6 @@ The two packages are versioned and published **independently** with plain
 its stories, and all dev tooling live in a separate package and are never part
 of the component tarball (`files: ["dist"]`).
 
-## Getting started
-
 ```sh
 pnpm install
 pnpm dev          # start Storybook at http://localhost:6006
